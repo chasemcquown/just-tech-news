@@ -47,6 +47,36 @@ router.post('/', (req, res) => {
     });
 });
 
+// this route will allow for a user to login
+router.post('/login', (req, res) => {
+  // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+    User.findOne({
+      where: {
+        email: req.body.email
+      }
+    }).then(dbUserData => {
+      if (!dbUserData) {
+        res.status(400).json({ message: 'No user with that email address!' });
+        return;
+      }
+  
+      // res.json({ user: dbUserData });
+  
+      // Verify user
+      // checking to see if the plain text password and hashed password match
+      const validPassword = dbUserData.checkPassword(req.body.password);
+
+      // in the conditional statement below, if the match returns a false value, an error message is sent back to the client, and the return statement exits out of the function immediately.
+      if (!validPassword) {
+        res.status(400).json({ message: 'Incorrect password!' });
+        return;
+      }
+      
+      res.json({ user: dbUserData, message: 'You are now logged in!' });
+
+    });  
+});
+
 router.put('/:id', (req, res) => {
   // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
 
