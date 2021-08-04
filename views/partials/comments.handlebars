@@ -1,0 +1,13 @@
+<div class="comments">
+  {{#each this}}
+  <section class="comment">
+    <div class="meta">
+        {{!-- the format_date function is from our helpers.js file, and will format the date in a clean manner. If we wished to keep the default format, then remove format_date --}}
+      {{user.username}} on {{format_date created_at}}
+    </div>
+    <div class="text">
+      {{comment_text}}
+    </div>
+  </section>
+  {{/each}}
+</div>
