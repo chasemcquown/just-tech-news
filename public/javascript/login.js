@@ -15,7 +15,8 @@ async function loginFormHandler(event) {
       });
   
       if (response.ok) {
-        document.location.replace('/');
+        // the following code will automatically take the user to the user dashboard if they are logged in
+        document.location.replace('/dashboard');
       } else {
         alert(response.statusText);
       }
